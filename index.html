@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prapawit Intun — Portfolio</title>
+  <meta name="description" content="Prapawit Intun — MIT-style friendly glass UI portfolio + projects + evidence links." />
+  <style>
+    :root{
+      /* Friendly + “smart lab” palette (MIT Computation / Media Lab vibe) */
+      --bg0:#f6f8ff;
+      --bg1:#eff3ff;
+      --ink:#0b1020;
+
+      --text: rgba(11,16,32,.92);
+      --muted: rgba(11,16,32,.68);
+      --muted2: rgba(11,16,32,.52);
+
+      --glass: rgba(255,255,255,.72);
+      --glass2: rgba(255,255,255,.58);
+
+      --stroke: rgba(12,18,35,.12);
+      --stroke2: rgba(12,18,35,.18);
+
+      --shadow: 0 22px 70px rgba(12,18,35,.14);
+      --shadow2: 0 12px 34px rgba(12,18,35,.10);
+
+      --r: 28px;
+      --r2: 18px;
+      --blur: 18px;
+
+      --max: 1120px;
+      --trayH: 114px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 14% 10%, rgba(120,170,255,.34), transparent 55%),
+        radial-gradient(900px 620px at 86% 18%, rgba(255,160,180,.26), transparent 55%),
+        radial-gradient(900px 720px at 36% 90%, rgba(160,255,205,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* Soft film grain + “smart” texture */
+    body:before{
+      content:"";
+      position:fixed; inset:-20px;
+      pointer-events:none;
+      background:
+        radial-gradient(700px 380px at 30% 30%, rgba(0,0,0,.04), transparent 60%),
+        radial-gradient(520px 360px at 70% 60%, rgba(0,0,0,.03), transparent 60%),
+        repeating-linear-gradient(135deg, rgba(0,0,0,.02) 0 2px, transparent 2px 14px);
+      opacity:.65;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ min-height:100dvh; padding-bottom: calc(var(--trayH) + 26px); }
+
+    /* top bar */
+    .topbar{
+      position:fixed; left:50%; top:14px; transform:translateX(-50%);
+      width:min(var(--max), calc(100% - 22px));
+      z-index:60;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background: var(--glass);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+      user-select:none;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(11,16,32,.86), rgba(11,16,32,.20));
+      opacity:.95;
+    }
+    .brand b{ font-weight:780; letter-spacing:.2px; }
+    .brand span{ color:var(--muted2); font-size:13px; }
+
+    .navpill{
+      display:flex; gap:6px; flex-wrap:wrap;
+      padding:8px;
+      border-radius:999px;
+      background: var(--glass2);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+    }
+    .navpill button{
+      appearance:none; border:0; cursor:pointer;
+      padding:8px 10px;
+      border-radius:999px;
+      background:transparent;
+      color:var(--muted);
+      font-size:13px;
+      letter-spacing:.2px;
+      transition: transform .12s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    }
+    .navpill button:hover{ transform: translateY(-1px); color:rgba(11,16,32,.88); }
+    .navpill button.active{ background: rgba(11,16,32,.08); color: rgba(11,16,32,.92); }
+
+    main{
+      width:min(var(--max), calc(100% - 22px));
+      margin:0 auto;
+      padding-top:86px;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    /* ===== HERO frame ===== */
+    .frame{
+      border-radius: 34px;
+      background: rgba(255,255,255,.38);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .frame:before{
+      content:"";
+      position:absolute; inset:14px;
+      border-radius: 28px;
+      border: 2px solid rgba(11,16,32,.16);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .frameInner{
+      padding:22px;
+      display:grid;
+      gap:16px;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .heroGrid{ grid-template-columns:1fr; }
+    }
+
+    .tile{
+      border-radius: 26px;
+      background: var(--glass2);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(var(--blur));
+      overflow:hidden;
+      position:relative;
+      min-height: 230px;
+      box-shadow: var(--shadow2);
+    }
+    .tile .pad{ padding:18px; }
+
+    .miniRow{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+    }
+    @media (max-width: 900px){
+      .miniRow{ grid-template-columns:1fr; }
+    }
+
+    .avatarCard{
+      display:flex; gap:14px; align-items:center;
+      min-height: 110px;
+      background: rgba(255,255,255,.62);
+      border:1px solid var(--stroke);
+      border-radius: 26px;
+      padding:14px;
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+    }
+    .avatar{
+      width:62px; height:62px; border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.98), rgba(255,255,255,.2)),
+        radial-gradient(circle at 70% 70%, rgba(120,170,255,.45), transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(255,160,180,.28), transparent 60%);
+      border:1px solid var(--stroke2);
+      box-shadow: 0 18px 40px rgba(12,18,35,.16);
+      flex:0 0 auto;
+    }
+    .avatarCard b{ font-size:14px; letter-spacing:.2px; }
+    .avatarCard p{ margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35; }
+
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(11,16,32,.05);
+      border: 1px solid rgba(11,16,32,.10);
+      color: rgba(11,16,32,.78);
+      font-size:12px;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    .chip i{
+      width:8px; height:8px; border-radius:50%;
+      background: rgba(11,16,32,.55);
+      display:inline-block;
+      opacity:.85;
+    }
+
+    .statCard{
+      border-radius: 26px;
+      background:
+        radial-gradient(420px 260px at 25% 25%, rgba(255,160,180,.22), transparent 62%),
+        rgba(255,255,255,.60);
+      border:1px solid var(--stroke);
+      padding:14px;
+      min-height:110px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+    }
+    .statTop{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    }
+    .statTop small{ color:var(--muted2); font-size:12px; }
+    .statTop .date{
+      font-weight:860; font-size:26px; line-height:1;
+    }
+    .statList{
+      display:flex; flex-wrap:wrap; gap:8px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .markTile{
+      min-height: 260px;
+      display:flex;
+      align-items:flex-end;
+      padding:22px;
+      background:
+        radial-gradient(760px 460px at 22% 20%, rgba(120,170,255,.26), transparent 62%),
+        radial-gradient(620px 420px at 76% 76%, rgba(255,160,180,.18), transparent 62%),
+        linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.38));
+      position:relative;
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+    }
+    .markTile:after{
+      content:"";
+      position:absolute; inset:-20px;
+      background:
+        repeating-linear-gradient(90deg, rgba(11,16,32,.06) 0 1px, transparent 1px 22px);
+      opacity:.10;
+      transform: rotate(-10deg);
+      pointer-events:none;
+    }
+    .markTitle{
+      position:relative;
+      font-weight:930;
+      text-transform: uppercase;
+      letter-spacing:.6px;
+      line-height:.92;
+      font-size: clamp(38px, 6.4vw, 78px);
+      color: rgba(11,16,32,.92);
+      text-shadow: 0 14px 30px rgba(12,18,35,.10);
+    }
+    .markSub{
+      position:relative;
+      margin-top:10px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.25px;
+      max-width: 52ch;
+    }
+
+    .featuredTile{
+      min-height: 250px;
+      background:
+        radial-gradient(560px 320px at 30% 30%, rgba(120,170,255,.22), transparent 62%),
+        radial-gradient(560px 320px at 70% 70%, rgba(160,255,205,.18), transparent 62%),
+        rgba(255,255,255,.60);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+    }
+    .featuredTile h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .featuredTile p{
+      margin:10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 78ch;
+    }
+
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--stroke);
+      color: rgba(11,16,32,.88);
+      font-size:13px;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+      box-shadow: 0 10px 26px rgba(12,18,35,.10);
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.74); border-color: var(--stroke2); }
+    .btn.primary{ background: rgba(11,16,32,.88); color: rgba(255,255,255,.94); border-color: rgba(11,16,32,.18); }
+    .btn.primary:hover{ background: rgba(11,16,32,.96); }
+
+    /* quick category row */
+    .pillRow{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding: 14px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+    }
+    .pillRow .desc{
+      flex:1;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width: 220px;
+    }
+    .logoBox{
+      width:52px; height:52px;
+      border-radius: 18px;
+      background: rgba(11,16,32,.86);
+      border:1px solid rgba(11,16,32,.18);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      letter-spacing:.8px;
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 14px 30px rgba(12,18,35,.14);
+    }
+    .descText b{ display:block; font-size:13px; }
+    .descText span{ display:block; margin-top:4px; color: var(--muted); font-size:12px; line-height:1.35; }
+
+    .circleBtns{
+      display:flex; gap:10px;
+      overflow:auto;
+      padding-bottom:2px;
+      scroll-snap-type:x mandatory;
+    }
+    .circleBtns::-webkit-scrollbar{ height:8px; }
+    .circleBtns::-webkit-scrollbar-thumb{ background: rgba(11,16,32,.12); border-radius:999px; }
+    .circle{
+      flex:0 0 auto;
+      width:62px; height:62px;
+      border-radius: 20px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.62);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      scroll-snap-align:start;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      position:relative;
+      box-shadow: 0 10px 22px rgba(12,18,35,.08);
+    }
+    .circle:hover{ transform: translateY(-2px); border-color: var(--stroke2); background: rgba(255,255,255,.78); }
+    .circle.active{
+      border-color: rgba(11,16,32,.20);
+      background: rgba(11,16,32,.06);
+    }
+    .circle span{ font-size:20px; }
+    .circle small{
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:6px;
+      font-size:10px;
+      color: rgba(11,16,32,.62);
+      letter-spacing:.2px;
+      white-space:nowrap;
+      pointer-events:none;
+    }
+
+    /* sections */
+    section{
+      scroll-margin-top: 92px;
+      border-radius: 34px;
+      background: rgba(255,255,255,.40);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    section:before{
+      content:"";
+      position:absolute; inset:14px;
+      border-radius: 28px;
+      border: 2px solid rgba(11,16,32,.12);
+      pointer-events:none;
+      opacity:.85;
+    }
+    .sectionInner{
+      position:relative;
+      padding:22px;
+      display:grid;
+      gap:16px;
+    }
+    .secHead{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      padding: 18px 22px 0;
+      position:relative;
+      z-index:1;
+    }
+    .secHead h3{ margin:0; font-size:18px; letter-spacing:.2px; }
+    .secHead small{ color: var(--muted2); font-size:12px; }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px){
+      .grid2{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      border-radius: 26px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--stroke);
+      overflow:hidden;
+      backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow2);
+    }
+    .card .pad{ padding:18px; }
+    .card h4{ margin:0; font-size:16px; letter-spacing:.2px; }
+    .card p{ margin:10px 0 0; color: var(--muted); font-size: 13.5px; line-height:1.6; }
+    .links{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    /* NEW: Selected project grid (ภาพสอง) */
+    .projHead{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-top:2px;
+    }
+    .projHead h4{ margin:0; font-size:16px; letter-spacing:.2px; }
+    .projHead span{ color:var(--muted2); font-size:12px; }
+    .projGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .projGrid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px){
+      .projGrid{ grid-template-columns: 1fr; }
+    }
+    .proj{
+      border-radius: 24px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height: 160px;
+    }
+    .projTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .projTop b{
+      font-size:13.5px;
+      letter-spacing:.2px;
+      line-height:1.25;
+    }
+    .badge{
+      flex:0 0 auto;
+      padding:6px 9px;
+      border-radius: 999px;
+      background: rgba(11,16,32,.06);
+      border: 1px solid rgba(11,16,32,.10);
+      color: rgba(11,16,32,.72);
+      font-size:11px;
+      white-space:nowrap;
+    }
+    .proj p{
+      margin:0;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.55;
+    }
+    .projBtns{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.60);
+      color: rgba(11,16,32,.86);
+    }
+    .btn.disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
+
+    details{
+      border-radius: 22px;
+      background: rgba(255,255,255,.56);
+      border: 1px solid var(--stroke);
+      overflow:hidden;
+      box-shadow: var(--shadow2);
+    }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      user-select:none;
+      color: rgba(11,16,32,.88);
+      font-weight:720;
+      letter-spacing:.2px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .detailBody{
+      padding: 0 16px 16px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+    .detailBody ul{ margin:10px 0 0; padding-left:18px; }
+    .detailBody li{ margin:6px 0; }
+    .kline{ height:1px; background: rgba(11,16,32,.10); margin:10px 0 12px; }
+
+    /* bottom tray */
+    .tray{
+      position:fixed; left:50%; bottom:14px; transform:translateX(-50%);
+      width:min(var(--max), calc(100% - 22px));
+      height: var(--trayH);
+      border-radius: 30px;
+      background: rgba(255,255,255,.66);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      z-index:80;
+      padding:12px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .trayLabel{
+      display:flex; flex-direction:column; gap:2px;
+      padding:8px 10px;
+      border-radius:18px;
+      background: rgba(255,255,255,.62);
+      border:1px solid var(--stroke);
+      min-width: 190px;
+      box-shadow: var(--shadow2);
+    }
+    .trayLabel b{ font-size:13px; }
+    .trayLabel span{ font-size:12px; color:var(--muted2); }
+
+    .thumbs{
+      flex:1;
+      display:flex;
+      gap:10px;
+      overflow:auto;
+      padding-bottom:4px;
+      scroll-snap-type:x mandatory;
+    }
+    .thumbs::-webkit-scrollbar{ height:8px; }
+    .thumbs::-webkit-scrollbar-thumb{ background: rgba(11,16,32,.12); border-radius:999px; }
+    .thumb{
+      flex:0 0 auto;
+      width: 190px;
+      height: 90px;
+      border-radius: 20px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.62);
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+      scroll-snap-align:start;
+      transition: transform .12s ease, border-color .2s ease, background .2s ease;
+      user-select:none;
+      box-shadow: 0 10px 24px rgba(12,18,35,.10);
+    }
+    .thumb:hover{ transform: translateY(-2px); border-color: var(--stroke2); background: rgba(255,255,255,.74); }
+    .thumb.active{ border-color: rgba(11,16,32,.18); background: rgba(11,16,32,.04); }
+
+    .thumb .tbg{
+      position:absolute; inset:-40px;
+      opacity:.95;
+      transform: rotate(-6deg);
+    }
+    .thumb .ttext{
+      position:absolute; left:12px; right:12px; bottom:10px;
+      display:flex; flex-direction:column; gap:4px;
+      text-shadow: 0 10px 22px rgba(255,255,255,.55);
+    }
+    .thumb .ttext b{ font-size:13px; letter-spacing:.2px; line-height:1.15; }
+    .thumb .ttext span{
+      font-size:12px; color: rgba(11,16,32,.62);
+      overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+    }
+
+    /* drawer */
+    .drawer{
+      position:fixed;
+      right:14px; bottom: calc(var(--trayH) + 26px);
+      width: min(460px, calc(100% - 28px));
+      border-radius: 28px;
+      background: rgba(255,255,255,.76);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      z-index:90;
+      overflow:hidden;
+      transform: translateY(12px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .drawer.show{ opacity:1; transform: translateY(0); pointer-events:auto; }
+    .drawerTop{
+      padding:14px 14px 0;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .drawerTop h5{ margin:0; font-size:15px; letter-spacing:.2px; }
+    .drawerTop .x{
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.62);
+      color: rgba(11,16,32,.86);
+      cursor:pointer;
+    }
+    .drawerBody{ padding:10px 14px 14px; }
+    .drawerBody p{ margin:8px 0 0; color: var(--muted); font-size:13.5px; line-height:1.6; }
+    .tags{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+
+    /* scroll buttons */
+    .scrollBtns{
+      position:fixed;
+      left:14px;
+      bottom: calc(var(--trayH) + 26px);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:85;
+    }
+    .iconBtn{
+      width:44px; height:44px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.70);
+      backdrop-filter: blur(14px);
+      color: rgba(11,16,32,.88);
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      display:grid;
+      place-items:center;
+      transition: transform .12s ease, background .2s ease;
+    }
+    .iconBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.82); }
+
+    footer{
+      width:min(var(--max), calc(100% - 22px));
+      margin: 22px auto 0;
+      padding: 10px 2px 26px;
+      color: var(--muted2);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="brand" title="Prapawit Intun">
+      <div class="dot"></div>
+      <div>
+        <b>Prapawit Intun</b>
+        <span>MIT-style portfolio • computation • participation • biosignals</span>
+      </div>
+    </div>
+
+    <div class="navpill" aria-label="Section navigation">
+      <button class="active" data-to="#home">Home</button>
+      <button data-to="#portfolio">Portfolio</button>
+      <button data-to="#evidence">Evidence</button>
+      <button data-to="#contact">Contact</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <main>
+      <!-- HOME -->
+      <section id="home" class="frame" aria-label="Home">
+        <div class="frameInner">
+          <div class="heroGrid">
+            <div style="display:grid; gap:16px;">
+              <div class="miniRow">
+                <div class="avatarCard">
+                  <div class="avatar" aria-hidden="true"></div>
+                  <div>
+                    <b>Creative Technologist + Architect</b>
+                    <p>Computational participation, policy platforms, and emotion-aware spatial systems.</p>
+                    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                      <span class="chip"><i></i> Bangkok / Boston</span>
+                      <span class="chip"><i></i> Web prototypes</span>
+                      <span class="chip"><i></i> EEG–GSR</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="statCard">
+                  <div class="statTop">
+                    <div>
+                      <small>Updated</small>
+                      <div class="date" id="heroDate">—</div>
+                      <small id="heroMonth">—</small>
+                    </div>
+                    <a class="btn" href="#portfolio" data-scroll style="padding:8px 10px; border-radius:12px;">
+                      Open portfolio
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="statList">
+                    <span class="chip"><i></i> Awards</span>
+                    <span class="chip"><i></i> Talks</span>
+                    <span class="chip"><i></i> Exhibitions</span>
+                    <span class="chip"><i></i> Publications</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tile featuredTile">
+                <div class="pad">
+                  <h2>Portfolio Snapshot</h2>
+                  <p>
+                    A friendly glass UI portfolio aligned with MIT Computation + Media Lab aesthetics: clean, readable,
+                    and evidence-forward. Use the bottom tray to open interactive demos and event links, or jump by category.
+                  </p>
+                  <div class="ctaRow">
+                    <button class="btn primary" id="openFeatured">Open featured demo</button>
+                    <a class="btn" href="https://www.spaceappschallenge.org/2025/find-a-team/n-r-x-fp-x-ne-x-fl-x-fi-x-fc-x-l/" target="_blank" rel="noopener">
+                      NASA Space Apps team page
+                    </a>
+                    <a class="btn" href="https://psl.design.upenn.edu/ovenbird-workshop-at-advances-in-architectural-geometry-conference2025/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExY0hIMFNQaVN4eHhuRmVtSnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4Jlboh7HzqKKU2l7q4UyhbP99hO0Qyxvj5nLal7DqmAa2dMktASG55rlBFeQ_aem_tIiMDuqTQ6RlpblcBf9nGg" target="_blank" rel="noopener">
+                      AAG 2025 (MIT) — Ovenbird workshop
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tile markTile" aria-label="Title">
+              <div style="position:relative;">
+                <div class="markTitle">PRAPAWIT<br/>INTUN</div>
+                <div class="markSub">
+                  Computation in architecture + public participation + biosignals —
+                  built as evidence-backed work for research and real-world impact.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick category row -->
+          <div class="pillRow" aria-label="Quick categories">
+            <div class="desc">
+              <div class="logoBox">PI</div>
+              <div class="descText">
+                <b>Jump to a category</b>
+                <span>Tap a circle to scroll + open the matching section.</span>
+              </div>
+            </div>
+
+            <div class="circleBtns" id="circleBtns">
+              <button class="circle active" data-jump="awards" title="Awards"><span>🏆</span><small>Awards</small></button>
+              <button class="circle" data-jump="memberships" title="Memberships"><span>🧩</span><small>Memberships</small></button>
+              <button class="circle" data-jump="media" title="Media"><span>🎙️</span><small>Media</small></button>
+              <button class="circle" data-jump="judge" title="Judge/Critic"><span>🧑‍⚖️</span><small>Critic</small></button>
+              <button class="circle" data-jump="contrib" title="Contributions"><span>🛠️</span><small>Impact</small></button>
+              <button class="circle" data-jump="pubs" title="Publications"><span>📄</span><small>Pubs</small></button>
+              <button class="circle" data-jump="shows" title="Exhibitions"><span>🖼️</span><small>Shows</small></button>
+              <button class="circle" data-jump="roles" title="Leading Roles"><span>🧭</span><small>Roles</small></button>
+              <button class="circle" data-jump="commercial" title="Engagement"><span>📣</span><small>Engage</small></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PORTFOLIO -->
+      <section id="portfolio" aria-label="Portfolio">
+        <div class="secHead">
+          <h3>Portfolio</h3>
+          <small>Selected projects first → then “Portfolio (by category)”.</small>
+        </div>
+
+        <div class="sectionInner">
+          <!-- ✅ ภาพสอง: ลิสต์รายการแทรกก่อน “Portfolio (by category)” -->
+          <div class="card">
+            <div class="pad">
+              <div class="projHead">
+                <h4>Selected Projects (overview)</h4>
+                <span>Based on your portfolio grid — add/replace links anytime.</span>
+              </div>
+              <div style="margin-top:10px;" class="projGrid" id="selectedGrid"></div>
+            </div>
+          </div>
+
+          <!-- ====== Portfolio (by category) ====== -->
+          <div class="card">
+            <div class="pad">
+              <h4 style="margin:0; font-size:16px; letter-spacing:.2px;">Portfolio (by category)</h4>
+              <p style="margin-top:8px;">Expandable evidence list for awards, memberships, media, jury service, contributions, publications, exhibitions, roles, and engagement.</p>
+            </div>
+          </div>
+
+          <!-- 1 Awards -->
+          <details id="awards" open>
+            <summary>
+              <span>1. Major National / International Awards</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to collapse</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Golden Model Award — conferred by HRH Princess Maha Chakri Sirindhorn (First-Class Honor, RMUTR);
+              Bronze Prize — Asia Young Designer Award (AYDA);
+              “Thesis of the Year” — Popular Vote (Architecture Category), CDAST;
+              MIT Media Lab — Oral Presentation Selection (public participation + bathing culture research, presented in Cambridge, MA);
+              Monocle Design Awards 2022 — contributed to “Choduk Playground” project;
+              Honorable Mention — NASA Space Apps Challenge (Cambridge).
+              <div class="links">
+                <a class="btn" href="https://www.spaceappschallenge.org/2025/find-a-team/n-r-x-fp-x-ne-x-fl-x-fi-x-fc-x-l/" target="_blank" rel="noopener">NASA Space Apps team</a>
+                <a class="btn" href="https://online.flipbuilder.com/jclq/qshb/files/basic-html/page98.html" target="_blank" rel="noopener">Catalogue / page ref</a>
+                <a class="btn" href="https://www.instagram.com/p/DI-a3XUSTDD/" target="_blank" rel="noopener">IG post</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 2 Memberships -->
+          <details id="memberships">
+            <summary>
+              <span>2. Memberships in Selective Professional Associations</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Association of Siamese Architects (ASA) — Member;
+              Society of Young Social Innovators (SYSI) — Member;
+              AIA — Member;
+              Scholarship Recipient (Master’s & PhD), RMUTR;
+              Young Policy Makers — selectively admitted fellow;
+              Graphic Designer & Editor, Executive Architect Council Training #5, Architect Council of Thailand (2023 handbook).
+              <div class="links">
+                <a class="btn" href="https://www.aiainternational.org/news-feed/2022/12/16/celebrating-new-licensees-and-new-members-in-2022" target="_blank" rel="noopener">AIA Intl (ref)</a>
+                <a class="btn" href="https://www.instagram.com/p/DDCNpcQy1zP/" target="_blank" rel="noopener">IG post</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 3 Media -->
+          <details id="media">
+            <summary>
+              <span>3. Media Coverage & Public Presentations</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Invited presenter — Design Research Day, Bangkok Design Week 2021 (Creative Economy Agency);
+              featured in ThaiPBS The Active, ART4D, City Cracker, and official Bangkok Design Week channels;
+              Research Assistant — AI in Architecture Group, Chulalongkorn University (news releases);
+              MIT Professional Certificate in Machine Learning & AI (program highlights).
+              <div class="links">
+                <a class="btn" href="https://www.youtube.com/watch?v=ejwtt3pp2Ag" target="_blank" rel="noopener">YouTube</a>
+                <a class="btn" href="https://www.bangkokdesignweek.com/en/bkkdw2023/program/51219" target="_blank" rel="noopener">BKKDW program</a>
+                <a class="btn" href="https://pr-bangkok.com/?p=326057&fbclid=IwZXh0bgNhZW0CMTEAAR0g9ODYteflbVGUG_AjxdlhZ3HU5Z-TBQWFsDVXe81sa3x1nNy4Fma3dJo_aem_Ad-rgsOQe2VnqEJIQcygW8kgK7KQ-yC40v41nhfoUifyU2-eM6NaghR1zJn0lUKqSzRall0XZV7Kbk7JxyxmE7Hm" target="_blank" rel="noopener">Press</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 4 Judge/Critic -->
+          <details id="judge">
+            <summary>
+              <span>4. Service as a Judge / Critic</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Studio Jury & Committee Member — Faculty of Architecture, RMUTR;
+              Guest Critic — Assumption University studios (3rd-year design prelims, July 18, 2024).
+              <div class="links">
+                <a class="btn" href="https://www.facebook.com/story.php?id=100063555614282&story_fbid=1007226978072480&utm_source=chatgpt.com&_rdr" target="_blank" rel="noopener">FB story</a>
+                <a class="btn" href="https://www.facebook.com/arch.au.edu/posts/pfbid0REEYYMn2FCKhkKVZ42D2MVAA3ARs2xSz2a5NCRVHDZ7dTmMQFRXHUKBm66b9Eviel" target="_blank" rel="noopener">AU post</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 5 Contributions -->
+          <details id="contrib">
+            <summary>
+              <span>5. Original Contributions of Major Significance</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Parkerhood — founder of a repair-economy policy platform; invited to present at Bangkok Metropolitan Administration’s
+              “New-Generation City Council” (briefed Deputy Governor + agencies);
+              distributing a Right-to-Repair handbook across all 50 Bangkok districts;
+              EEG–GSR responsive architecture workflows; emotion-based temple façade generator.
+              <div class="links">
+                <a class="btn" href="https://www.linkedin.com/posts/prapawit-intun_happy-to-share-our-project-parkerhood-at-activity-7329768878543196161-vLdZ?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADBdCaABw4DQczJzhSBDFfgTp-O5oOghtKE" target="_blank" rel="noopener">LinkedIn (Parkerhood)</a>
+                <a class="btn" href="https://www.linkedin.com/posts/prapawit-intun_im-pleased-to-share-my-experimental-studies-activity-7324273182083862528-lW3r?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADBdCaABw4DQczJzhSBDFfgTp-O5oOghtKE" target="_blank" rel="noopener">LinkedIn (studies)</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 6 Publications -->
+          <details id="pubs">
+            <summary>
+              <span>6. Scholarly Publications</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              International of Art, Design and Architecture Exhibition 2022 — catalogue paper;
+              forthcoming in NAJUA (Q4, Scopus indexed);
+              peer-reviewed proceedings: ACA (Thailand) and upcoming ACADIA 2025 submission.
+              <div class="links">
+                <a class="btn" href="https://dspace.spu.ac.th/server/api/core/bitstreams/3e88fa6d-48a7-48a8-ac81-1a282ec7d9b5/content" target="_blank" rel="noopener">PDF (dspace)</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 7 Exhibitions -->
+          <details id="shows">
+            <summary>
+              <span>7. Exhibitions & Showcases</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Day of Design at MIT Museum; Bangkok Design Week (2019–present);
+              Singapore Design Week (NEWVIEWS School — AR x Physical Computing);
+              Demark Design Award Exhibition (ICONSIAM);
+              curator — “Used-to-Love Market” and “Lang Ka Wat Market” (Montien Hotel);
+              TikTok “Lucky Life” — 160k likes and 3M+ views;
+              ACADIA 2025 exhibition (under review).
+              <div class="links">
+                <a class="btn" href="https://psl.design.upenn.edu/ovenbird-workshop-at-advances-in-architectural-geometry-conference2025/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExY0hIMFNQaVN4eHhuRmVtSnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4Jlboh7HzqKKU2l7q4UyhbP99hO0Qyxvj5nLal7DqmAa2dMktASG55rlBFeQ_aem_tIiMDuqTQ6RlpblcBf9nGg" target="_blank" rel="noopener">AAG 2025 (Ovenbird)</a>
+                <a class="btn" href="https://www.facebook.com/watch/live/?ref=watch_permalink&v=1457113011299380" target="_blank" rel="noopener">Event live (FB)</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 8 Roles -->
+          <details id="roles">
+            <summary>
+              <span>8. Leading / Critical Roles</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Founder & Lead Strategist — Parkerhood (policy + community platform), with Thai Health Promotion Foundation,
+              Bangkok Metropolitan Office, and AIDs Access.
+              <div class="links">
+                <a class="btn" href="https://www.linkedin.com/posts/prapawit-intun_happy-to-share-our-project-parkerhood-at-activity-7329768878543196161-vLdZ?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADBdCaABw4DQczJzhSBDFfgTp-O5oOghtKE" target="_blank" rel="noopener">Portfolio link</a>
+              </div>
+            </div>
+          </details>
+
+          <!-- 9 Commercial -->
+          <details id="commercial">
+            <summary>
+              <span>9. Commercial Success & Public Engagement</span>
+              <span style="color:var(--muted2); font-weight:650;">Tap to expand</span>
+            </summary>
+            <div class="detailBody">
+              <div class="kline"></div>
+              Curator — “Used-to-Love Market” (Chula Soi 5, PMCU) and “Participatory citizen lab co., ltd.”:
+              revenue THB 4M + local vendor impact THB 1.5M (see evidence);
+              “Lang Ka Wat Market” (Montien Hotel) — THB 2M+ local economic activity;
+              TikTok “Lucky Life” — 160k likes, 3M+ views.
+              <div class="links">
+                <a class="btn" href="https://data.creden.co/company/general/0705565002935" target="_blank" rel="noopener">Creden evidence</a>
+                <a class="btn" href="https://www.fazwaz.com/overview/thailand/bangkok/pathum-wan/pathum-wan/siam-square-one" target="_blank" rel="noopener">Context</a>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- EVIDENCE -->
+      <section id="evidence" aria-label="Evidence">
+        <div class="secHead">
+          <h3>Evidence links (collection)</h3>
+          <small>Store supporting docs + posts here.</small>
+        </div>
+
+        <div class="sectionInner grid2">
+          <div class="card">
+            <div class="pad">
+              <h4>Primary portfolio document</h4>
+              <p>Use this as your single “source of truth” for reviewers.</p>
+              <div class="links">
+                <a class="btn primary" href="https://docs.google.com/document/d/1TrDcxCsKXFzS3LC0WkeyFtnGdYd-39DQ6yeIHua_whU/edit?usp=sharing" target="_blank" rel="noopener">Open Google Doc</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h4>Selected references</h4>
+              <p>Quick links to public traces (press, posts, archives).</p>
+              <div class="links">
+                <a class="btn" href="https://www.bltbangkok.com/lifestyle/urban-living/35850/" target="_blank" rel="noopener">BLT Bangkok</a>
+                <a class="btn" href="https://www.facebook.com/CityCracker/posts/pfbid0PRPdJrfyemDNiENCzv5R46mWHRVjMCf9dN5UDmcXfniNqB2yyNxGgYysZaSoRAg4l" target="_blank" rel="noopener">City Cracker</a>
+                <a class="btn" href="https://issaraphap.com/terrarium-solution" target="_blank" rel="noopener">Issaraphap</a>
+                <a class="btn" href="https://adaymagazine.com/author/illustrator01/" target="_blank" rel="noopener">a day</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h4>Research video</h4>
+              <p>Artificial Intelligence in Architecture Group (Chulalongkorn University).</p>
+              <div class="links">
+                <a class="btn primary" href="https://www.youtube.com/watch?v=ejwtt3pp2Ag" target="_blank" rel="noopener">Watch on YouTube</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h4>Extra evidence</h4>
+              <p>Images / posts supporting activities and showcases.</p>
+              <div class="links">
+                <a class="btn" href="https://www.facebook.com/photo/?fbid=464133957852168&set=a.211236883141878" target="_blank" rel="noopener">FB photo 1</a>
+                <a class="btn" href="https://www.facebook.com/photo?fbid=715711122626367&set=a.328702434660573" target="_blank" rel="noopener">FB photo 2</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" aria-label="Contact">
+        <div class="secHead">
+          <h3>Contact</h3>
+          <small>Replace with your real contact links if you want.</small>
+        </div>
+        <div class="sectionInner grid2">
+          <div class="card">
+            <div class="pad">
+              <h4>Quick actions</h4>
+              <p>Open the portfolio doc, then use the bottom tray to open interactive demos and events.</p>
+              <div class="links">
+                <a class="btn primary" href="https://docs.google.com/document/d/1TrDcxCsKXFzS3LC0WkeyFtnGdYd-39DQ6yeIHua_whU/edit?usp=sharing" target="_blank" rel="noopener">Portfolio doc</a>
+                <a class="btn" href="#portfolio" data-scroll>Jump to portfolio</a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="pad">
+              <h4>Note</h4>
+              <p>This is a single-file website. Save as <b>index.html</b> and deploy with GitHub Pages.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> Prapawit Intun</span>
+      <span>Scroll • Bottom tray = demos + events</span>
+    </footer>
+  </div>
+
+  <!-- Scroll buttons -->
+  <div class="scrollBtns" aria-label="Scroll controls">
+    <button class="iconBtn" id="btnUp" title="Scroll up" aria-label="Scroll up">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 5l7 7M12 5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 19V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <button class="iconBtn" id="btnDown" title="Scroll down" aria-label="Scroll down">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 19l7-7M12 19l-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Bottom project tray -->
+  <div class="tray" role="region" aria-label="Project tray">
+    <div class="trayLabel">
+      <b>Projects & Events</b>
+      <span>Tap → details + open link</span>
+    </div>
+    <div class="thumbs" id="thumbs" aria-label="Project thumbnails"></div>
+  </div>
+
+  <!-- Project detail drawer -->
+  <aside class="drawer" id="drawer" aria-label="Project details">
+    <div class="drawerTop">
+      <div>
+        <h5 id="dTitle">Title</h5>
+        <div id="dRole" style="margin-top:4px; color:rgba(11,16,32,.62); font-size:12px;"></div>
+      </div>
+      <button class="x" id="closeDrawer" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="drawerBody">
+      <p id="dDesc"></p>
+      <div class="tags" id="dTags"></div>
+      <div class="ctaRow" style="margin-top:12px;">
+        <a class="btn primary" id="dOpen" href="#" target="_blank" rel="noopener">
+          Open link
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <button class="btn ghost" id="dCopy">Copy link</button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    const $ = (q)=>document.querySelector(q);
+    const $$ = (q)=>document.querySelectorAll(q);
+
+    // date label
+    const d = new Date();
+    const day = String(d.getDate()).padStart(2,"0");
+    const month = d.toLocaleString(undefined, {month:"short"});
+    const year = d.getFullYear();
+    $("#heroDate").textContent = day;
+    $("#heroMonth").textContent = `${month} ${year}`;
+    $("#year").textContent = year;
+
+    // NAV
+    const navBtns = $$(".navpill button");
+    navBtns.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const to = btn.getAttribute("data-to");
+        const el = document.querySelector(to);
+        if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+
+    // smooth scroll links
+    $$("[data-scroll]").forEach(a=>{
+      a.addEventListener("click", (e)=>{
+        const href = a.getAttribute("href");
+        if(href && href.startsWith("#")){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        }
+      });
+    });
+
+    // circle category jump
+    const circles = $$("#circleBtns .circle");
+    circles.forEach(c=>{
+      c.addEventListener("click", ()=>{
+        circles.forEach(x=>x.classList.remove("active"));
+        c.classList.add("active");
+        const id = c.getAttribute("data-jump");
+        const target = document.getElementById(id);
+        if(target){
+          target.open = true;
+          target.scrollIntoView({behavior:"smooth", block:"start"});
+        }
+      });
+    });
+
+    // Selected Projects (ภาพสอง) — with best-known links; others = “add link later”
+    const selectedProjects = [
+      { n:"01", title:"Habitat Layout Creator — NASA Space Apps Challenge", badge:"Participatory Design", desc:"Interactive 3D layout tool + biosignal thinking for space habitat planning.", url:"https://www.spaceappschallenge.org/2025/find-a-team/n-r-x-fp-x-ne-x-fl-x-fi-x-fc-x-l/" },
+      { n:"02", title:"Voxel Bathhouse Co-Design Game", badge:"Bio-Responsive Systems", desc:"Web game for participatory design around bathing culture + spatial care.", url:"" },
+      { n:"03", title:"LocalLoopBKK — Urban Platform", badge:"Social Practice", desc:"Participation platform for Bangkok neighborhoods: co-design + civic feedback loops.", url:"https://localloopbkk.github.io/coyard/" },
+      { n:"04", title:"Repair Culture App & Community", badge:"Social Practice", desc:"Mapping repair culture as social infrastructure and design justice.", url:"https://localloopbkk.github.io/repairculture/repart%20culture.html" },
+      { n:"05", title:"Choduk Community Playground (Monocle Awards context)", badge:"Cultural Integration", desc:"Community playground project contribution; playful public space + revitalization.", url:"" },
+      { n:"06", title:"XR Practices in NEWVIEWS School", badge:"Interactive Web / XR", desc:"AR x physical computing workshop participation and prototypes.", url:"" },
+      { n:"07", title:"NeuroActuate Web App", badge:"AI / ML", desc:"EEG/GSR-driven interaction concept for safe, responsive spatial output.", url:"" },
+      { n:"08", title:"EmoTune AI Composer", badge:"Bio-Responsive Systems", desc:"Transforms affective signals into generative media output.", url:"" },
+      { n:"09", title:"Gesture Learning Interactive Interface", badge:"Interaction", desc:"Gesture mapping + biosignal layer for embodied interaction research.", url:"https://localloopbkk.github.io/gesturewithbiosignals/Test.html" },
+      { n:"10", title:"TempleTransform NeuroApp", badge:"Heritage + AI", desc:"Emotion-informed Thai façade / heritage form exploration.", url:"https://localloopbkk.github.io/Emotion/" },
+
+      { n:"11", title:"Ovenbird Workshop (AAG 2025 / MIT)", badge:"Geometry", desc:"Advances in Architectural Geometry workshop participation.", url:"https://psl.design.upenn.edu/ovenbird-workshop-at-advances-in-architectural-geometry-conference2025/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExY0hIMFNQaVN4eHhuRmVtSnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4Jlboh7HzqKKU2l7q4UyhbP99hO0Qyxvj5nLal7DqmAa2dMktASG55rlBFeQ_aem_tIiMDuqTQ6RlpblcBf9nGg" },
+      { n:"12", title:"COBOD 3D (ACADIA 2025)", badge:"Fabrication", desc:"3D construction / fabrication learning and documentation (ACADIA context).", url:"" },
+      { n:"13", title:"EPS Compression Pavilion", badge:"Fabrication", desc:"Material + assembly exploration through structural compression logic.", url:"" },
+      { n:"14", title:"PSK 4x4 Off-Road Thailand", badge:"Industry", desc:"Product/industry context; linking making + field practice.", url:"https://www.facebook.com/psk4x4thailand/" },
+      { n:"15", title:"Forest Management Webapp", badge:"Simulation", desc:"Dashboard + mapping for forest management and carbon narrative.", url:"https://forestos.netlify.app/forestos_opencarbon_ratchaburi" },
+      { n:"16", title:"Upcycling with Scraplab", badge:"Social Practice", desc:"Upcycling / circularity practice, documented through prototype work.", url:"" },
+      { n:"17", title:"Beautés du Monde Exhibition — Cartier Bangkok", badge:"Exhibition", desc:"Assistant modeler / presentation support for exhibition-related work.", url:"" },
+      { n:"18", title:"NEWVIEWS Exhibition @FabCafe", badge:"Exhibition", desc:"Showcase of XR/physical computing work within community exhibition context.", url:"" },
+      { n:"19", title:"Thai Temple Digital Preservation", badge:"Heritage", desc:"Digital studies of Thai architectural elements and preservation workflows.", url:"" },
+      { n:"20", title:"AA Visiting School Bangkok", badge:"Social practice", desc:"Computational design learning + cultural integration in Bangkok context.", url:"https://www.aaschool.ac.uk/academicprogrammes/visitingschool/bangkok" }
+    ];
+
+    const selectedGrid = $("#selectedGrid");
+    selectedGrid.innerHTML = selectedProjects.map(p=>{
+      const has = !!p.url;
+      return `
+        <div class="proj">
+          <div class="projTop">
+            <b>${p.n}. ${p.title}</b>
+            <span class="badge">${p.badge}</span>
+          </div>
+          <p>${p.desc}</p>
+          <div class="projBtns">
+            ${has
+              ? `<a class="btn primary" href="${p.url}" target="_blank" rel="noopener">Open link</a>`
+              : `<span class="btn disabled">Link (add later)</span>`
+            }
+            <button class="btn ghost" data-add-to-tray="${p.n}">Pin</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Bottom tray projects (clickable)
+    const projects = [
+      {
+        id: "emotion",
+        title: "AI — Emotion to Calm Down",
+        role: "Interactive web prototype",
+        desc: "A calming interaction that translates emotional input into gentle visual responses.",
+        tags: ["calm tech","emotion UI","web"],
+        url: "https://localloopbkk.github.io/Emotion/",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(120,170,255,.55), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(255,160,180,.38), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "gesture",
+        title: "Gesture + Biosignals",
+        role: "Realtime interaction test",
+        desc: "Gesture-driven input paired with biosignal thinking for interaction mapping.",
+        tags: ["gesture","realtime","interaction"],
+        url: "https://localloopbkk.github.io/gesturewithbiosignals/Test.html",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(160,255,205,.50), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(170,160,255,.34), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "repair",
+        title: "Repair Culture",
+        role: "Narrative + civic interface",
+        desc: "Exploring repair culture as everyday infrastructure and design justice.",
+        tags: ["repair culture","civic","story"],
+        url: "https://localloopbkk.github.io/repairculture/repart%20culture.html",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(255,210,140,.46), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(120,170,255,.34), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "coyard",
+        title: "Localloop — Public Participation",
+        role: "Participatory platform prototype",
+        desc: "Co-design workflows through a shareable web interface for communities.",
+        tags: ["participation","platform","community"],
+        url: "https://localloopbkk.github.io/coyard/",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(255,160,180,.44), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(160,255,205,.34), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "nasa",
+        title: "NASA Space Apps (Cambridge)",
+        role: "Team profile / award reference",
+        desc: "Public record of participation and recognition (Cambridge).",
+        tags: ["NASA","Space Apps","award"],
+        url: "https://www.spaceappschallenge.org/2025/find-a-team/n-r-x-fp-x-ne-x-fl-x-fi-x-fc-x-l/",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(255,255,255,.30), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(120,170,255,.42), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "aag",
+        title: "AAG 2025 — Ovenbird Workshop",
+        role: "Conference workshop link",
+        desc: "Advances in Architectural Geometry workshop participation reference.",
+        tags: ["AAG","geometry","MIT"],
+        url: "https://psl.design.upenn.edu/ovenbird-workshop-at-advances-in-architectural-geometry-conference2025/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExY0hIMFNQaVN4eHhuRmVtSnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4Jlboh7HzqKKU2l7q4UyhbP99hO0Qyxvj5nLal7DqmAa2dMktASG55rlBFeQ_aem_tIiMDuqTQ6RlpblcBf9nGg",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(170,160,255,.44), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(255,160,180,.28), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      },
+      {
+        id: "portfolioDoc",
+        title: "Master Portfolio Document",
+        role: "Google Doc (evidence hub)",
+        desc: "Consolidated references, claims, and supporting links for reviewers.",
+        tags: ["evidence","doc","source of truth"],
+        url: "https://docs.google.com/document/d/1TrDcxCsKXFzS3LC0WkeyFtnGdYd-39DQ6yeIHua_whU/edit?usp=sharing",
+        thumb: "radial-gradient(420px 250px at 25% 25%, rgba(160,255,205,.34), transparent 60%), radial-gradient(320px 240px at 75% 75%, rgba(255,210,140,.26), transparent 60%), linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.26))"
+      }
+    ];
+
+    const thumbs = $("#thumbs");
+    thumbs.innerHTML = projects.map((p,i)=>`
+      <div class="thumb ${i===0?"active":""}" data-open="${p.id}" role="button" tabindex="0" aria-label="Open ${p.title}">
+        <div class="tbg" style="background:${p.thumb}"></div>
+        <div class="ttext">
+          <b>${p.title}</b>
+          <span>${p.url.replace("https://","")}</span>
+        </div>
+      </div>
+    `).join("");
+
+    // drawer
+    const drawer = $("#drawer");
+    const dTitle = $("#dTitle");
+    const dRole  = $("#dRole");
+    const dDesc  = $("#dDesc");
+    const dTags  = $("#dTags");
+    const dOpen  = $("#dOpen");
+    const dCopy  = $("#dCopy");
+
+    function setActiveThumb(id){
+      $$(".thumb").forEach(t=>t.classList.toggle("active", t.getAttribute("data-open")===id));
+    }
+    function openProject(id){
+      const p = projects.find(x=>x.id===id) || projects[0];
+      dTitle.textContent = p.title;
+      dRole.textContent  = p.role;
+      dDesc.textContent  = p.desc;
+      dOpen.href = p.url;
+      dTags.innerHTML = (p.tags||[]).map(t=>`<span class="chip"><i></i>${t}</span>`).join("");
+      drawer.classList.add("show");
+      setActiveThumb(p.id);
+      history.replaceState(null, "", "#" + p.id);
+    }
+    function closeDrawer(){ drawer.classList.remove("show"); }
+
+    // tray click
+    document.addEventListener("click", (e)=>{
+      const openId = e.target.closest("[data-open]")?.getAttribute("data-open");
+      if(openId) openProject(openId);
+
+      const pin = e.target.closest("[data-add-to-tray]")?.getAttribute("data-add-to-tray");
+      if(pin){
+        // simple “pin” behavior: open portfolio doc for now (you can customize)
+        openProject("portfolioDoc");
+      }
+    });
+
+    document.addEventListener("keydown", (e)=>{
+      const el = e.target.closest?.(".thumb");
+      if(el && (e.key==="Enter" || e.key===" ")){
+        e.preventDefault();
+        openProject(el.getAttribute("data-open"));
+      }
+      if(e.key==="Escape") closeDrawer();
+    });
+
+    $("#closeDrawer").addEventListener("click", closeDrawer);
+
+    dCopy.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(dOpen.href);
+        dCopy.textContent = "Copied!";
+        setTimeout(()=>dCopy.textContent="Copy link", 900);
+      }catch{
+        alert("Copy failed. You can manually copy: " + dOpen.href);
+      }
+    });
+
+    // featured project button
+    $("#openFeatured").addEventListener("click", ()=>openProject("emotion"));
+
+    // open from hash
+    function tryOpenFromHash(){
+      const hash = (location.hash || "").replace("#","");
+      const found = projects.find(p=>p.id===hash);
+      if(found) openProject(found.id);
+    }
+    window.addEventListener("hashchange", tryOpenFromHash);
+    tryOpenFromHash();
+
+    // scroll up/down buttons (section-to-section)
+    const sectionEls = ["#home","#portfolio","#evidence","#contact"].map(s=>document.querySelector(s)).filter(Boolean);
+    function currentSectionIndex(){
+      const y = window.scrollY + 120;
+      let idx = 0;
+      for(let i=0;i<sectionEls.length;i++){
+        const top = sectionEls[i].offsetTop;
+        if(top <= y) idx = i;
+      }
+      return idx;
+    }
+    $("#btnUp").addEventListener("click", ()=>{
+      const i = currentSectionIndex();
+      const target = sectionEls[Math.max(0, i-1)];
+      target?.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+    $("#btnDown").addEventListener("click", ()=>{
+      const i = currentSectionIndex();
+      const target = sectionEls[Math.min(sectionEls.length-1, i+1)];
+      target?.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    // nav highlight on scroll
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          navBtns.forEach(b=>{
+            b.classList.toggle("active", b.getAttribute("data-to") === "#" + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: .5 });
+    sectionEls.forEach(sec=>observer.observe(sec));
+  </script>
+</body>
+</html>
